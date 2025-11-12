@@ -1,0 +1,227 @@
+/* Header / navbar styles */
+
+/* Container */
+#nav-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: linear-gradient(90deg, #ffffff 0%, #e6f3ff 50%, #ffffff 100%);
+	padding: 12px 12px;
+	box-shadow: 0 2px 8px rgba(173, 216, 230, 0.3);
+	flex-wrap: nowrap;
+	border: 2px solid #add8e6;
+	border-radius: 10px;
+	font-family: 'Instrument Sans', 'Segoe UI', Helvetica, sans-serif;
+	width: 100%;
+	position: relative;
+	gap: 0;
+	box-sizing: border-box;
+}
+
+/* Left section */
+.nav-left {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-shrink: 0;
+	padding-left: 12px;
+}
+
+/* Center section */
+.nav-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	flex: 0 1 auto;
+	border: 2px solid #add8e6;
+	border-radius: 12px;
+	padding: 2px 2px;
+	background: rgba(173, 216, 230, 0.08);
+	width: fit-content;
+	margin: 0 auto;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+
+/* Right section */
+.nav-right {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+	padding-right: 12px;
+}
+
+/* Logo */
+#header-logo {
+	height: 40px;
+	width: auto;
+	flex-shrink: 0;
+	transition: transform 0.3s ease;
+}
+
+#header-logo:hover {
+	transform: scale(1.05);
+}
+
+/* Logo link wrapper */
+#nav-bar a:has(#header-logo) {
+	padding: 0;
+	background: none !important;
+	transform: none !important;
+	border-radius: 0;
+}
+
+#nav-bar a:has(#header-logo):hover {
+	background: none !important;
+	transform: none !important;
+}
+
+/* Links */
+#nav-bar a {
+	color: #2c5aa0;
+	text-decoration: none;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-weight: 500;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+#nav-bar a:hover,
+#nav-bar a:focus {
+	background: #e0f4ff;
+	color: #1a5f9e;
+	transform: translateY(-2px);
+}
+
+/* Menu link (left side) */
+#header-home-link {
+	color: #2c5aa0;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	order: 0;
+}
+
+#header-home-link:hover {
+	background: #e0f4ff;
+	color: #1a5f9e;
+}
+
+/* Map link (center) */
+#header-map {
+	color: #5a8bc0;
+	font-weight: 500;
+	order: 1;
+}
+
+#header-map:hover {
+	background: #e0f4ff;
+	color: #2c5aa0;
+}
+
+/* About link (center) */
+#header-about {
+	color: #5a8bc0;
+	font-weight: 500;
+	order: 2;
+}
+
+#header-about:hover {
+	background: #e0f4ff;
+	color: #2c5aa0;
+}
+
+/* Log in button */
+#header-log-in {
+	color: #2c5aa0;
+	background: transparent;
+	border: 2px solid #add8e6;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-weight: 700;
+	transition: all 0.3s ease;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	font-size: 13px;
+}
+
+#header-log-in:hover {
+	background: #e0f4ff;
+	border-color: #2c5aa0;
+	color: #2c5aa0;
+}
+
+/* Sign up button (primary CTA) */
+#header-sign-up {
+	background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
+	color: #1a5f9e;
+	border: none;
+	padding: 8px 12px;
+	font-weight: 700;
+	border-radius: 8px;
+	transition: all 0.3s ease;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	font-size: 13px;
+	box-shadow: 0 2px 6px rgba(173, 216, 230, 0.4);
+}
+
+#header-sign-up:hover {
+	background: linear-gradient(135deg, #6fb7db 0%, #87ceeb 100%);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(173, 216, 230, 0.6);
+	color: #0d4a7c;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 768px) {
+	#nav-bar {
+		flex-wrap: wrap;
+		padding: 8px 8px;
+		position: static;
+		background: linear-gradient(135deg, #f8fbff 0%, #f0f8ff 100%);
+	}
+
+	.nav-left {
+		padding-left: 8px;
+		width: 100%;
+		order: 1;
+		flex-shrink: 0;
+	}
+
+	.nav-center {
+		width: auto;
+		gap: 6px;
+		order: 2;
+		padding: 4px 8px;
+		position: static !important;
+		left: auto !important;
+		transform: none !important;
+		margin: 6px auto !important;
+	}
+
+	.nav-right {
+		width: 100%;
+		padding-right: 8px;
+		gap: 6px;
+		order: 3;
+		justify-content: flex-start;
+		flex-shrink: 0;
+	}
+
+	#header-logo {
+		height: 32px;
+	}
+
+	#nav-bar a {
+		padding: 6px 10px;
+		font-size: 12px;
+	}
+}
+
+/* End of header styles */
