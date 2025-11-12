@@ -3,10 +3,15 @@
         $siret = htmlspecialchars($_POST['siret']);
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
+        $password2 = htmlspecialchars($_POST['password2']);
 
         $rep = $bdd -> query("Select count(*) From users Where email = " + "or siret = " + $siret + ";");
 
         if ($rep[0] == 0) {
+            if ($password != $password2) {
+                echo "Les mots de passe ne correspondent pas.";
+                exit();
+            }
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $insert = $bdd -> prepare("Insert Into users (siret, email, password) Values (?, ?, ?);");
             $insert -> execute(array(

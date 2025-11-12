@@ -11,7 +11,7 @@
 
             if (password_verify($password, $hashed_password)) {
                 // Connexion réussie
-                header("Location: dashboard.html");
+                header("Location: index.html");
             } else {
                 echo "Mot de passe incorrect.";
             }
