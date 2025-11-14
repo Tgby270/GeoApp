@@ -57,7 +57,7 @@
 
 /* Logo */
 #header-logo {
-	height: 40px;
+	height: 64px; /* increased size for desktop */
 	width: auto;
 	flex-shrink: 0;
 	transition: transform 0.3s ease;
@@ -215,7 +215,7 @@
 	}
 
 	#header-logo {
-		height: 32px;
+		height: 48px; /* slightly smaller on small screens */
 	}
 
 	#nav-bar a {

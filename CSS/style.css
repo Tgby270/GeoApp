@@ -1,4 +1,14 @@
+
+body {
+   
+}
+
 #map { 
     height: 180px; 
     width: 30%;
+}
+
+#page-title{
+    text-align: center;
+    margin-top: 200px;
 }
