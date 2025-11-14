@@ -16,13 +16,13 @@
         <label for="email">Email : </label>
         <input type="email" id="email" name="email" required><br><br>
 
-        <label for="password">Mot de passe : :</label>
+        <label for="password">Mot de passe :</label>
         <input type="password" id="password" name="password" required><br><br>
 
-        <label for="password2">Vérification mot de passe : :</label>
+        <label for="password2">Vérification mot de passe :</label>
         <input type="password2" id="password2" name="password2" required><br><br>
 
-        <input type="submit" value="Register">
+        <input type="submit" value="S'inscrire">
         <a href="/GeoApp/HTML/connexionPage.php">Déjà un compte ? Connectez-vous ici.</a>
     </form>
 </body>

@@ -16,7 +16,7 @@
         <label for="password">Mot de passe : </label>
         <input type="password" id="password" name="password" required><br><br>
 
-        <input type="submit" value="Login">
+        <input type="submit" value="Se connecter">
         <a href="/GeoApp/HTML/inscription.php">Pas de compte ? Inscrivez-vous ici.</a>
     </form>
 </body>
