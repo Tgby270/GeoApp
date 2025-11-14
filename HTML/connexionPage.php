@@ -9,7 +9,7 @@
     <header>
         <?php include './header.html'; ?>
     </header>
-    <form action="connexion.php" method="post">
+    <form action="/GEOAPP/PHP/connexion.php" method="post">
         <label for="siret">Siret : </label>
         <input type="siret" id="siret" name="siret" required><br><br>
 

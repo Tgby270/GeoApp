@@ -6,7 +6,10 @@
     <title>Inscription</title>
 </head>
 <body>
-    <form action="inscription.php" method="post">
+    <header>
+        <?php include './header.html'; ?>
+    </header>
+    <form action="/GEOAPP/PHP/inscription.php" method="post">
         <label for="siret">Numero de Siret : </label>
         <input type="integer" id="siret" name="siret" required><br><br>
 
