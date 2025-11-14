@@ -17,5 +17,7 @@
         <input type="password" id="password" name="password" required><br><br>
 
         <input type="submit" value="Login">
+        <a href="/GeoApp/HTML/inscription.php">Pas de compte ? Inscrivez-vous ici.</a>
+    </form>
 </body>
 </html>

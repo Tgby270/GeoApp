@@ -23,5 +23,7 @@
         <input type="password2" id="password2" name="password2" required><br><br>
 
         <input type="submit" value="Register">
+        <a href="/GeoApp/HTML/connexionPage.php">Déjà un compte ? Connectez-vous ici.</a>
+    </form>
 </body>
 </html>
