@@ -6,6 +6,9 @@
     <title>Connexion</title>
 </head>
 <body>
+    <header>
+        <?php include './header.html'; ?>
+    </header>
     <form action="connexion.php" method="post">
         <label for="siret">Siret : </label>
         <input type="siret" id="siret" name="siret" required><br><br>

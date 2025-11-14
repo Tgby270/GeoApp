@@ -1,5 +1,5 @@
 <?php
-    if (SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $siret = htmlspecialchars($_POST['siret']);
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
