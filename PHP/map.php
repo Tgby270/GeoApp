@@ -24,6 +24,10 @@
 
 <body>
 
+    <header>
+        <?php include __DIR__ . '/../HTML/header.html'; ?>
+    </header>
+
     <div id="map1" style="height: 97vh; width: 100%;"></div>
 
     <script>
