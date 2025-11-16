@@ -1,3 +1,6 @@
+<?php
+    //require_once '/GeoApp/PHP/connexionBDD.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
