@@ -1,0 +1,90 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 0 12px;
+}
+
+form {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(173, 216, 230, 0.25);
+    border: 2px solid #add8e6;
+    max-width: 420px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+form label {
+    font-weight: 600;
+    color: #1a4f7a;
+    margin-bottom: 4px;
+    display: block;
+}
+
+form input[type="siret"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid #b9d9ef;
+    background: #f8fcff;
+    font-size: 14px;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+}
+
+form input:focus {
+    border-color: #6bb8e8;
+    box-shadow: 0 0 6px rgba(104, 175, 226, 0.4);
+    outline: none;
+}
+
+form input[type="submit"] {
+    background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    color: #0d4a7c;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 2px 6px rgba(173, 216, 230, 0.5);
+}
+
+form input[type="submit"]:hover {
+    background: linear-gradient(135deg, #6fb7db 0%, #87ceeb 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(173, 216, 230, 0.6);
+}
+
+form a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #2c5aa0;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+form a:hover {
+    color: #1a5f9e;
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    form {
+        padding: 22px;
+    }
+
+    form input[type="submit"] {
+        font-size: 14px;
+    }
+}
