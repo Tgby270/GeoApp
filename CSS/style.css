@@ -1,6 +1,7 @@
-
+*
 body {
-   
+   font-family: stack sans-text, Arial, sans-serif;
+   background-color: black;
 }
 
 #map { 
@@ -9,6 +10,112 @@ body {
 }
 
 #page-title{
+    color: white;
+    font-size: 4em;
     text-align: center;
-    margin-top: 200px;
+    margin-top: 100px;
+    margin-bottom: 0;
+}
+
+/* Spline viewer transition styles */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#spline-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 0 60px;
+}
+
+#spline-container {
+    width: 640px;
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 900ms cubic-bezier(.2,.9,.2,1);
+    will-change: transform;
+    transform-origin: 50% 50%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    background: #000;
+}
+
+/* Fullscreen overlay used during transition */
+#spline-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(255, 0, 0, 0.7) 60%, rgba(0,0,0,0.95) 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2500ms linear;
+    z-index: 9998;
+}
+
+#spline-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Small non-invasive cover to hide viewer watermark; fixed so it can be positioned over the viewer even when container collapses */
+/* Non-invasive cover placed at body level so it's not affected by transforms */
+#spline-cover {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 140px;
+    height: 36px;
+    background: rgba(0,0,0,1.00);
+    border-radius: 12px;
+    z-index: 99999; /* above the viewer content and overlays */
+    pointer-events: none; /* allow clicks to pass through */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+    display: none; /* hidden until positioned by JS */
+}
+
+/* small responsive adjustment for narrow viewer widths */
+@media (max-width: 480px) {
+    #spline-cover { width: 100px; height: 30px; }
+}
+
+#spline-container.animating {
+    z-index: 9999;
+    border-radius: 0;
+}
+
+/* fallback fullscreen class (not relied on by the JS measurement approach) */
+#spline-container.fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+}
+
+#enter-map {
+    padding: 10px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: #0b84ff;
+    color: white;
+}
+
+#enter-map:active { transform: translateY(1px); }
+
+/* Accessibility: ensure iframe/content covers container */
+#spline-container > spline-viewer,
+#spline-container > iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+container a{
+    margin: 200px;
 }

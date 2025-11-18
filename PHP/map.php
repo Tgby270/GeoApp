@@ -30,10 +30,5 @@
 
     <div id="map1" style="height: 97vh; width: 100%;"></div>
 
-    <script>
-        var map = L.map('map1', { minZoom: 3 }).setView([47.1, 3], 6.3);
-        loadmap(map);
-    </script>
-
 </body>
 </html>
