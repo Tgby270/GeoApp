@@ -31,6 +31,7 @@ async function getSportsEquipments(options) {
         }
 
         const data = await response.json();
+        console.log(data)
         return data.results;
     } catch (error) {
         console.error('Error fetching sports equipments:', error);
@@ -74,7 +75,11 @@ function createMarkers(data) {
     }
 
     // Use for...of to iterate over array values
-    markers = new L.MarkerClusterGroup();
+    markers = new L.MarkerClusterGroup({
+        disableClusteringAtZoom: 15
+    });
+    
+
     let noCoordCount = 0;
     for (let facility of data) {
         // Check if coordinates exist - they are in equip_coordonnees.lon and equip_coordonnees.lat
@@ -93,7 +98,6 @@ function createMarkers(data) {
             if(facility.arr_name){
                 str += facility.arr_name;
             }
-
 
             marker.bindPopup(str);
         } else {
