@@ -1,22 +1,29 @@
 <?php
+    session_start();
+    require_once 'connexionBDD.php';
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $siret = htmlspecialchars($_POST['siret']);
         $password = htmlspecialchars($_POST['password']);
 
-        $rep = $bdd -> query("Select password From users Where siret = '" . $siret . "';");
+        $rep = $bdd -> query("Select password From Users Where siret = '" . $siret . "';");
 
         if ($rep->rowCount() > 0) {
             $data = $rep->fetch();
             $hashed_password = $data['password'];
 
             if (password_verify($password, $hashed_password)) {
-                // Connexion réussie
-                header("Location: index.html");
+                header("Location: ../index.php");
             } else {
-                echo "Mot de passe incorrect.";
+                $_SESSION['error'] = "Mot de passe incorrect";
+                header("Location: ../HTML/connexionPage.php"); 
+                exit();
             }
         } else {
-            echo "Numéro de siret non trouvé.";
+            $_SESSION['error'] = "Numéro de siret non trouvé";
+            header("Location: ../HTML/connexionPage.php"); 
+            exit();
+            
         }
     }
 ?>

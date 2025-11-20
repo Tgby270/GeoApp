@@ -1,5 +1,6 @@
 <?php
-    //require_once '/GeoApp/PHP/connexionBDD.php';
+    session_start();
+    require_once __DIR__ . '/PHP/connexionBDD.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

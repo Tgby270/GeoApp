@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +13,16 @@
     <header>
         <?php include './header.html'; ?>
     </header>
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="error-message">
+            <?php 
+                echo $_SESSION['error']; 
+                unset($_SESSION['error']); 
+            ?>
+        </div>
+    <?php endif; ?>
     <div class="form-container">
-        <form action="/GEOAPP/PHP/inscription.php" method="post">
+        <form action="../PHP/inscription.php" method="post">
             <label for="siret">Numero de Siret : </label>
             <input type="integer" id="siret" name="siret" required><br><br>
 
@@ -22,11 +33,11 @@
             <input type="password" id="password" name="password" required><br><br>
 
             <label for="password2">Vérification mot de passe :</label>
-            <input type="password2" id="password2" name="password2" required><br><br>
+            <input type="password" id="password2" name="password2" required><br><br>
 
             <input type="submit" value="S'inscrire">
             <br>
-            <a href="/GeoApp/HTML/connexionPage.php">Déjà un compte ? Connectez-vous ici.</a>
+            <a href="./connexionPage.php">Déjà un compte ? Connectez-vous ici.</a>
         </form>
     </div>
 </body>
