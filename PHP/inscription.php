@@ -28,6 +28,7 @@
                 'email' => $email,
                 'password' => $hashed_password
             ))){
+                $_SESSION['siret'] = $siret;
                 header("Location: ../index.php");
                 exit();
             }                

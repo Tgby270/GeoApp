@@ -13,6 +13,7 @@
             $hashed_password = $data['password'];
 
             if (password_verify($password, $hashed_password)) {
+                $_SESSION['siret'] = $siret;
                 header("Location: ../index.php");
             } else {
                 $_SESSION['error'] = "Mot de passe incorrect";

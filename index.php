@@ -1,6 +1,7 @@
 <?php
+    ob_start();
     session_start();
-    require_once __DIR__ . '/PHP/connexionBDD.php';
+    require_once 'PHP/connexionBDD.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +16,16 @@
 
 <body>
     <header>
-        <?php include 'HTML/header.html'; ?>
+        <?php if (isset($_SESSION['siret'])){
+                include 'HTML/headerConnect.html';
+            }
+            else{
+                include 'HTML/header.html';
+            } 
+        ?>
     </header>
+    
+
     
     <h1 id="page-title">Bienvenue sur GeoApp !</h1>
 
