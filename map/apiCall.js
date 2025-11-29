@@ -1,3 +1,5 @@
+const limit = 100; // API max limit
+
 /**
  * Calls the French sports facilities API
  * @param {Object} options - Query options
@@ -47,7 +49,6 @@ async function getSportsEquipments(options) {
  */
 async function getAllSportsEquipments(totalRecords, options = {}) {
     const results = [];
-    const limit = 100; // API max limit
     const totalPages = Math.ceil(totalRecords / limit);
     console.log(`fetching...`);
     for (let i = 0; i < totalPages; i++) {
@@ -150,12 +151,46 @@ function loadmap(map) {
     }).addTo(map);
 
 
-    getAllSportsEquipments(3000, {where: "arr_name='Caen'"})
+    getAllSportsEquipments(limit, {where: `arr_name='${getSearchVille()}'`})
         .then(data => {
             console.log('Sports facilities data:', data.length, 'records');
             createMarkers(data);
             const loading = document.getElementById('loading');
             if (loading) loading.classList.add('hidden');
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+/**
+ * Fetch equipment types from API
+ * @returns {Promise<Array>} Equipment types data
+ */
+async function getEquipmentTypes() {
+    const baseUrl = "https://equipements.sports.gouv.fr/api/explore/v2.1/catalog/datasets/data-es-types/records?limit=-1";
+    try {
+        const response = await fetch(baseUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Fetched equipment types successfully');
+        return data.results;
+    } catch (error) {
+        console.error('Error fetching equipment types:', error);
+        throw error;
+    }
+}
+
+function getSearchVille() {
+    const searchInput = document.getElementById("locationSearch");
+    return searchInput ? searchInput.value : '';
+}
+
+function applyFilters() {
+    const ville = getSearchVille();
+    getAllSportsEquipments(limit, {where: `arr_name='${ville}'`})
+        .then(data => {
+            createMarkers(data);
         })
         .catch(error => console.error('Error:', error));
 }
