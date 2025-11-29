@@ -1,4 +1,7 @@
 const limit = 100; // API max limit
+let userLatitude = null;
+let userLongitude = null;
+let whereClause = '';
 
 /**
  * Calls the French sports facilities API
@@ -75,8 +78,10 @@ function createMarkers(data) {
         return;
     }
 
-    // Use for...of to iterate over array values
-    markers = new L.MarkerClusterGroup({
+    if(window.markers){
+        map.removeLayer(window.markers);
+    }
+    window.markers = new L.MarkerClusterGroup({
         disableClusteringAtZoom: 15
     });
     
@@ -96,8 +101,20 @@ function createMarkers(data) {
             if(facility.inst_adresse){
                 str += facility.inst_adresse + '<br>';
             }
-            if(facility.arr_name){
-                str += facility.arr_name;
+            if(facility.new_name){
+                str += facility.new_name;
+            }
+
+            if(facility.equip_type_name){
+                str += '<br><i>' + facility.equip_type_name + '</i>';
+            }
+
+            if(facility.equip_sanit === 'true'){
+                str += '<br>• Sanitaires';
+            }
+
+            if(facility.equip_douche === 'true'){
+                str += '<br>• Douches';
             }
 
             marker.bindPopup(str);
@@ -112,7 +129,7 @@ function createMarkers(data) {
 /**
  * Get user's current location
  */
-function getLocation() {
+function getUserLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error);
     } else {
@@ -125,11 +142,32 @@ function getLocation() {
  * @param {Object} position
  */
 function success(position) {
-    console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
-    // Optionally center map on user location
-    if (typeof map !== 'undefined') {
-        map.setView([position.coords.latitude, position.coords.longitude], 13);
+    userLatitude = position.coords.latitude;
+    userLongitude = position.coords.longitude;
+
+    console.log(`User location: Lat ${userLatitude}, Lon ${userLongitude}`);
+    
+    // Create a custom red icon for user location
+    const redIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    // Remove existing user marker if present
+    if (window.userMarker) {
+        map.removeLayer(window.userMarker);
     }
+
+    // Add red user location marker
+    window.userMarker = L.marker([userLatitude, userLongitude], { icon: redIcon })
+        .addTo(map)
+        .bindPopup("<b>Vous êtes ici</b>")
+        .openPopup();
+    
 }
 
 /**
@@ -142,16 +180,18 @@ function error() {
 /**
  * Load map with tile layer and sports facilities markers
  * @param {map} map 
+ * @param {string} whereClause - Optional WHERE clause for filtering
  */
-function loadmap(map) {
+function loadmap(map, whereClause = '') {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution:
             '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
     }).addTo(map);
 
-
-    getAllSportsEquipments(limit, {where: `arr_name='${getSearchVille()}'`})
+    const options = whereClause ? { where: whereClause } : {};
+    
+    getAllSportsEquipments(limit, options)
         .then(data => {
             console.log('Sports facilities data:', data.length, 'records');
             createMarkers(data);
@@ -181,16 +221,284 @@ async function getEquipmentTypes() {
     }
 }
 
+
+// Global state for equipment selection
+let allEquipmentTypes = [];
+let selectedEquipmentTypes = new Set();
+let areaVisible = false;
+let amenitiesVisible = false;
+let selectedOptions = new Set();
+
+function showEquipmentTypes() {
+    const selectionArea = document.getElementById("equipmentSelectionArea");
+    const gridContainer = document.getElementById("equipmentGrid");
+    const searchInput = document.getElementById("equipmentSearch");
+    const rayonInput = document.getElementById("rayon");
+    const rayonValue = document.getElementById("rayonValue");
+    const toggleBtn = document.getElementById("toggleCheckboxes");
+    const amenitiesSection = document.getElementById("amenitiesSelectionArea");
+    const toggleAmenitiesBtn = document.getElementById("toggleAmenities");
+    
+    // Toggle selection area visibility
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            areaVisible = !areaVisible;
+            selectionArea.style.display = areaVisible ? 'block' : 'none';
+            toggleBtn.classList.toggle('active', areaVisible);
+            
+            if (areaVisible) {
+                toggleBtn.innerHTML = '<span class="checkbox-icon">▲</span> Masquer les types';
+            } else {
+                toggleBtn.innerHTML = '<span class="checkbox-icon">▼</span> Afficher les types';
+            }
+        });
+    }
+    
+    // Toggle amenities section visibility
+    if (toggleAmenitiesBtn) {
+        toggleAmenitiesBtn.addEventListener('click', () => {
+            amenitiesVisible = !amenitiesVisible;
+            amenitiesSection.style.display = amenitiesVisible ? 'block' : 'none';
+            toggleAmenitiesBtn.classList.toggle('active', amenitiesVisible);
+            
+            if (amenitiesVisible) {
+                toggleAmenitiesBtn.innerHTML = '<span class="checkbox-icon">▲</span> Masquer les options';
+            } else {
+                toggleAmenitiesBtn.innerHTML = '<span class="checkbox-icon">▼</span> Afficher les options';
+            }
+        });
+    }
+
+     // Update range slider display and gradient
+    if (rayonInput && rayonValue) {
+        const updateSliderGradient = (value) => {
+            const percentage = ((value - rayonInput.min) / (rayonInput.max - rayonInput.min)) * 100;
+            rayonInput.style.background = `linear-gradient(to right, #add8e6 0%, #add8e6 ${percentage}%, #e0e0e0 ${percentage}%, #e0e0e0 100%)`;
+        };
+        
+        updateSliderGradient(rayonInput.value);
+        
+        rayonInput.addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            if (value === 0) {
+                rayonValue.textContent = 'Désactivé';
+            } else {
+                rayonValue.textContent = value + ' km';
+            }
+            updateSliderGradient(e.target.value);
+        });
+    }
+    
+    // Load and display equipment types
+    getEquipmentTypes().then(data => {
+        allEquipmentTypes = data.sort((a, b) => a.equipement.localeCompare(b.equipement));
+        renderEquipmentGrid(allEquipmentTypes);
+        
+        // Add search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = allEquipmentTypes.filter(item => 
+                item.equipement.toLowerCase().includes(searchTerm)
+            );
+            renderEquipmentGrid(filtered);
+        });
+    }).catch(error => {
+        gridContainer.innerHTML = '<div class="error-text">Erreur de chargement</div>';
+        console.error('Error loading equipment types:', error);
+    });
+
+}
+
+/**
+ * Render equipment types as selectable cards
+ * @param {Array} data - Equipment types to display
+ */
+function renderEquipmentGrid(data) {
+    const gridContainer = document.getElementById("equipmentGrid");
+    
+    if (data.length === 0) {
+        gridContainer.innerHTML = '<div class="no-results">Aucun résultat trouvé</div>';
+        return;
+    }
+    
+    gridContainer.innerHTML = '';
+    
+    data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'equipment-card';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'equip-' + item.code;
+        checkbox.value = item.code;
+        checkbox.checked = selectedEquipmentTypes.has(item.code);
+        
+        checkbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                selectedEquipmentTypes.add(item.code);
+                card.classList.add('selected');
+            } else {
+                selectedEquipmentTypes.delete(item.code);
+                card.classList.remove('selected');
+            }
+            updateSelectedCount();
+        });
+        
+        const label = document.createElement('span');
+        label.textContent = item.equipement;
+        
+        // Make entire card clickable
+        card.addEventListener('click', (e) => {
+            if (e.target === checkbox) {
+                e.stopPropagation();
+                return;
+            }
+            checkbox.checked = !checkbox.checked;
+            
+            // Manually trigger the selection logic
+            if (checkbox.checked) {
+                selectedEquipmentTypes.add(item.code);
+                card.classList.add('selected');
+            } else {
+                selectedEquipmentTypes.delete(item.code);
+                card.classList.remove('selected');
+            }
+            updateSelectedCount();
+        });
+        
+        if (selectedEquipmentTypes.has(item.code)) {
+            card.classList.add('selected');
+        }
+        
+        card.appendChild(checkbox);
+        card.appendChild(label);
+        gridContainer.appendChild(card);
+    });
+    
+    updateSelectedCount();
+}
+
+/**
+ * Update the count of selected equipment types
+ */
+function updateSelectedCount() {
+    const selectedCount = document.getElementById("selectedCount");
+    if (selectedCount) {
+        const count = selectedEquipmentTypes.size;
+        if (count === 0) {
+            selectedCount.textContent = 'Aucun équipement sélectionné';
+        } else if (count === 1) {
+            selectedCount.textContent = '1 équipement sélectionné';
+        } else {
+            selectedCount.textContent = count + ' équipements sélectionnés';
+        }
+    }
+}
+
+/**
+ * Get selected equipment types
+ * @returns {Array} Array of selected equipment type codes
+ */
+function getSelectedEquipmentTypes() {
+    return Array.from(selectedEquipmentTypes);
+}
+
+function getSelected0ptions() {
+    return Array.from(selectedOptions);
+}
+
 function getSearchVille() {
     const searchInput = document.getElementById("locationSearch");
     return searchInput ? searchInput.value : '';
 }
 
+function getRayonValue(){
+    const rayonInput = document.getElementById("rayon");
+    return rayonInput ? parseInt(rayonInput.value) : 0;
+}
+
 function applyFilters() {
+    // Reset whereClause at the start
+    whereClause = '';
+    
     const ville = getSearchVille();
-    getAllSportsEquipments(limit, {where: `arr_name='${ville}'`})
-        .then(data => {
-            createMarkers(data);
-        })
-        .catch(error => console.error('Error:', error));
+    if(ville){
+        if(whereClause === '')whereClause += `new_name ='${ville}'`;
+        else whereClause += ` AND new_name='${ville}'`;
+    }
+
+    const selectedTypes = getSelectedEquipmentTypes();
+    if (selectedTypes.length > 0) {
+        const typesClause = selectedTypes.map(type => `equip_type_code='${type}'`).join(' OR ');
+        if(whereClause === '') whereClause += `${typesClause}`;
+        else whereClause += ' AND (' + typesClause + ')';
+    }
+
+    const selectedOptions = getSelected0ptions();
+    if (selectedOptions.length > 0) {
+        const optionsClause = selectedOptions.map(option => {
+            if (option === 'sanitaires') return 'equip_sanit="true"';
+            if (option === 'douche') return 'equip_douche="true"';
+            return '';
+        }).filter(clause => clause !== '').join(' AND ');
+        
+        if (optionsClause) {
+            if(whereClause === '') whereClause += optionsClause;
+            else whereClause += ' AND ' + optionsClause;
+        }
+    }
+
+    const rayon = getRayonValue();
+    if(rayon > 0){
+        if(ville){
+            alert('Vous ne pouvez pas filtrer par ville et par rayon en même temps.');
+            return;
+        }
+        else{
+            // Check if we already have user coordinates
+            getUserLocation();
+            if(userLatitude !== null && userLongitude !== null){
+                console.log(`Using cached user coordinates: Lat ${userLatitude}, Lon ${userLongitude}`);
+                const radiusMeters = rayon * 1000; // Convert km to meters
+                const distanceClause = `distance(equip_coordonnees, geom'POINT(${userLongitude} ${userLatitude})', ${radiusMeters}m)`;
+                
+                if(whereClause === '') whereClause = distanceClause;
+                else whereClause += ` AND ${distanceClause}`;
+                
+                console.log('Applying filters with where clause:', whereClause);
+                loadmap(map, whereClause);
+            } else {
+                // Need to get user location first
+                console.log('Getting user location...');
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            userLatitude = position.coords.latitude;
+                            userLongitude = position.coords.longitude;
+                            console.log(`Got user location: Lat ${userLatitude}, Lon ${userLongitude}`);
+                            
+                            const radiusMeters = rayon * 1000; // Convert km to meters
+                            const distanceClause = `distance(equip_coordonnees, geom'POINT(${userLongitude} ${userLatitude})', ${radiusMeters}m)`;
+                            
+                            if(whereClause === '') whereClause = distanceClause;
+                            else whereClause += ` AND ${distanceClause}`;
+                            
+                            console.log('Applying filters with where clause:', whereClause);
+                            loadmap(map, whereClause);
+                        },
+                        (error) => {
+                            console.error('Geolocation error:', error);
+                            alert('Impossible de récupérer votre position. Assurez-vous que la géolocalisation est activée dans votre navigateur.');
+                        }
+                    );
+                } else {
+                    alert('La géolocalisation n\'est pas supportée par votre navigateur.');
+                }
+            }
+            return; // Don't continue to loadmap() below
+        }
+    } 
+
+    console.log('Applying filters with where clause:', whereClause);
+    loadmap(map, whereClause);
 }

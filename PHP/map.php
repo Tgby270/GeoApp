@@ -49,8 +49,8 @@
 
                     <label for="rayon">Rayon (km):</label>
                     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
-                        <input type="range" name="Rayon" id="rayon" min="1" max="100" value="10" style="flex: 1; margin: 0;">
-                        <span id="rayonValue">10 km</span>
+                        <input type="range" name="Rayon" id="rayon" min="0" max="100" value="0" style="flex: 1; margin: 0;">
+                        <span id="rayonValue">Désactivé</span>
                     </div>
 
                     <label for="equipmentSearch">Type d'infrastructure :</label>
@@ -67,6 +67,26 @@
                         
                         <div id="selectedCount" class="selected-count">0 sélectionné(s)</div>
                     </div>
+
+                    <label>Options d'équipement :</label>
+                    <button type="button" id="toggleAmenities" class="toggle-checkbox-btn">
+                        <span class="checkbox-icon">▼</span> Afficher les options
+                    </button>
+                    
+                    <div id="amenitiesSelectionArea" class="equipment-selection-area" style="display: none;">
+                        <div class="equipment-grid">
+                            <div class="equipment-card" onclick="toggleAmenityCheckbox('sanitairesCheckbox')">
+                                <input type="checkbox" id="sanitairesCheckbox" name="sanitaires" value="sanitaires" onclick="event.stopPropagation();">
+                                <span>🚻 Possède des Sanitaires</span>
+                            </div>
+
+                            <div class="equipment-card" onclick="toggleAmenityCheckbox('doucheCheckbox')">
+                                <input type="checkbox" id="doucheCheckbox" name="douche" value="douche" onclick="event.stopPropagation();">
+                                <span>🚿 Possède des Douches</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="apply-filters-btn" id="applyFiltersBtn">Appliquer les filtres</button>
                 </form>
             </div>
@@ -76,7 +96,24 @@
     <script>
         var map = L.map('map1', { minZoom: 3 }).setView([47.1, 3], 6.3);
         loadmap(map);
-        //showEquipmentTypes();
+        showEquipmentTypes();
+        //getUserLocation();
+        
+        // Toggle amenity checkboxes when clicking on the card (same as equipment types)
+        function toggleAmenityCheckbox(checkboxId) {
+            const checkbox = document.getElementById(checkboxId);
+            checkbox.checked = !checkbox.checked;
+            const card = checkbox.closest('.equipment-card');
+            const value = checkbox.value;
+            
+            if (checkbox.checked) {
+                card.classList.add('selected');
+                selectedOptions.add(value);
+            } else {
+                card.classList.remove('selected');
+                selectedOptions.delete(value);
+            }
+        }
         
         // Setup filter form submission
         document.getElementById('filtersForm').addEventListener('submit', function(e) {
