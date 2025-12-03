@@ -5,12 +5,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background: linear-gradient(90deg, #ffffff 0%, #e6f3ff 50%, #ffffff 100%);
-	padding: 12px 12px;
-	box-shadow: 0 2px 8px rgba(173, 216, 230, 0.3);
+	background: black;
+	padding: 0px 12px;
 	flex-wrap: nowrap;
-	border: 2px solid #add8e6;
-	border-radius: 10px;
+	border-bottom: 2px solid gray;
 	font-family: 'Instrument Sans', 'Segoe UI', Helvetica, sans-serif;
 	width: 100%;
 	position: relative;
@@ -34,7 +32,7 @@
 	justify-content: center;
 	gap: 8px;
 	flex: 0 1 auto;
-	border: 2px solid #add8e6;
+	border: 2px solid gray;
 	border-radius: 12px;
 	padding: 2px 2px;
 	background: rgba(173, 216, 230, 0.08);
@@ -82,7 +80,7 @@
 
 /* Links */
 #nav-bar a {
-	color: #2c5aa0;
+	color: white;
 	text-decoration: none;
 	padding: 8px 12px;
 	border-radius: 8px;
@@ -92,55 +90,39 @@
 	position: relative;
 }
 
-#nav-bar a:hover,
-#nav-bar a:focus {
-	background: #e0f4ff;
-	color: #1a5f9e;
+.nav-center a:hover,
+.nav-center a:focus {
+	background: white;
+	color: black !important;
 	transform: translateY(-2px);
 }
 
 /* Menu link (left side) */
 #header-home-link {
-	color: #2c5aa0;
 	font-weight: 700;
 	letter-spacing: 0.5px;
 	order: 0;
 }
 
-#header-home-link:hover {
-	background: #e0f4ff;
-	color: #1a5f9e;
-}
-
 /* Map link (center) */
 #header-map {
-	color: #5a8bc0;
 	font-weight: 500;
 	order: 1;
 }
 
-#header-map:hover {
-	background: #e0f4ff;
-	color: #2c5aa0;
-}
 
 /* About link (center) */
 #header-about {
-	color: #5a8bc0;
 	font-weight: 500;
 	order: 2;
 }
 
-#header-about:hover {
-	background: #e0f4ff;
-	color: #2c5aa0;
-}
 
 /* Log in button */
 #header-log-in {
 	color: #2c5aa0;
 	background: transparent;
-	border: 2px solid #add8e6;
+	border: 2px solid gray;
 	padding: 8px 12px;
 	border-radius: 8px;
 	font-weight: 700;
@@ -151,15 +133,16 @@
 }
 
 #header-log-in:hover {
-	background: #e0f4ff;
-	border-color: #2c5aa0;
-	color: #2c5aa0;
+	background: linear-gradient(135deg, #898a8aff 0%, #a0a0a0ff 100%);
+	border-color: gray;
+	color: black;
+	transform: translateY(-1px);
 }
 
 /* Sign up button (primary CTA) */
 #header-sign-up {
-	background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
-	color: #1a5f9e;
+	background: linear-gradient(135deg, #898a8aff 0%, #a0a0a0ff 100%);
+	color: #ffffff;
 	border: none;
 	padding: 8px 12px;
 	font-weight: 700;
@@ -172,10 +155,10 @@
 }
 
 #header-sign-up:hover {
-	background: linear-gradient(135deg, #6fb7db 0%, #87ceeb 100%);
+	background: white;
 	transform: translateY(-1px);
 	box-shadow: 0 4px 12px rgba(173, 216, 230, 0.6);
-	color: #0d4a7c;
+	color: black;
 }
 
 /* Responsive: stack on small screens */
