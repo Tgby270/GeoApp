@@ -11,7 +11,7 @@
         <?php include './headerConnect.html'; ?>
     </header>
     <div class="form-container">
-        <form action="ajouterInfrastructure.php" method="post">
+        <form action="../PHP/ajouterInfrastrucutre.php" method="post">
             <label for="nom">Nom de l'infrastructure : </label>
             <input type="text" id="nom" name="nom" required><br><br>
 
@@ -21,14 +21,20 @@
             <label for="adresse">Adresse : </label>
             <input type="text" id="adresse" name="adresse" required><br><br>
 
-            <label for="coordonnéeX">Coordonnée X : </label>
-            <input type="number" id="coordonnéeX" name="coordonnéeX" required><br><br>
-
-            <label for="coordonnéeY">Coordonnée Y : </label>
-            <input type="number" id="coordonnéeY" name="coordonnéeY" required><br><br>
+            <div class="coordinates-row">
+                <div class="coord-group">
+                    <label for="coordonnéeX">Longitude : </label>
+                    <input type="number" id="coordonnéeX" name="coordonnéeX" required>
+                </div>
+                <div class="coord-group">
+                    <label for="coordonnéeY">Latitude : </label>
+                    <input type="number" id="coordonnéeY" name="coordonnéeY" required>
+                </div>
+            </div>
 
            <input type="submit" value="Ajouter Infrastructure">
         </form>
+        <?php //include './PHP/ajouterInfrastrucutre.php'; ?>
     </div>
 </body>
 </html>
