@@ -87,7 +87,11 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="apply-filters-btn" id="applyFiltersBtn">Appliquer les filtres</button>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button type="submit" class="apply-filters-btn" id="applyFiltersBtn" style="flex: 1; margin-top: 0;">Appliquer les filtres</button>
+                        <button type="button" class="apply-filters-btn" id="resetFiltersBtn" style="flex: 1; margin-top: 0;">Réinitialiser</button>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -126,6 +130,9 @@
             }
         });
     </script>
+
+    <?php include 'getInfrastructuresFromDb.php'; ?>
+
 
 </body>
 

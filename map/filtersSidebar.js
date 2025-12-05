@@ -19,6 +19,12 @@ function closeFilters() {
 openF = document.getElementById("openFilters");
 closeF = document.getElementById("closeFilters");
 
+let appliedFilters = document.getElementById("applyFiltersBtn");
+
+appliedFilters.addEventListener("click", function() {
+  closeFilters();
+  // Here you can add code to actually apply the filters
+});
 
 openF.addEventListener("click", function() {
   openFilters();

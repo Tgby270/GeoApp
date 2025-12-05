@@ -126,6 +126,21 @@ function createMarkers(data) {
     console.log('Number of facilities without coordinates:', noCoordCount);
 }
 
+function createMarkersFromDb(Name, Lat, Lon, Type, Address) {
+    // Reuse a single cluster layer so multiple DB markers are kept on the map
+    if (!window.markersDb) {
+        window.markersDb = new L.MarkerClusterGroup({
+            disableClusteringAtZoom: 15
+        });
+        window.markersDb.addTo(map);
+    }
+
+    const marker = L.marker([Lat, Lon]);
+    const str = `<b>${Name}</b><br>${Address}<br><i>${Type}</i>`;
+    marker.bindPopup(str);
+    window.markersDb.addLayer(marker);
+}
+
 /**
  * Get user's current location
  */
