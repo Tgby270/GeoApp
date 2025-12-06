@@ -23,18 +23,18 @@
 
             <div class="coordinates-row">
                 <div class="coord-group">
-                    <label for="coordonnéeX">Longitude : </label>
-                    <input type="number" id="coordonnéeX" name="coordonnéeX" required>
+                    <label for="coordonneeX">Longitude : </label>
+                    <input type="number" id="coordonneeX" name="coordonneeX" step = "any" required>
                 </div>
                 <div class="coord-group">
-                    <label for="coordonnéeY">Latitude : </label>
-                    <input type="number" id="coordonnéeY" name="coordonnéeY" required>
+                    <label for="coordonneeY">Latitude : </label>
+                    <input type="number" id="coordonneeY" name="coordonneeY" step = "any"required>
                 </div>
             </div>
 
            <input type="submit" value="Ajouter Infrastructure">
         </form>
-        <?php //include './PHP/ajouterInfrastrucutre.php'; ?>
+        <?php include '../PHP/ajouterInfrastrucutre.php'; ?>
     </div>
 </body>
 </html>
