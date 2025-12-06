@@ -1,4 +1,7 @@
 /* Header / navbar styles */
+:root {
+	--header-height: 82px;
+}
 
 /* Container */
 #nav-bar {
@@ -14,6 +17,7 @@
 	position: relative;
 	gap: 0;
 	box-sizing: border-box;
+	min-height: var(--header-height);
 }
 
 /* Left section */

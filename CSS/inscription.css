@@ -1,105 +1,128 @@
+body {
+    background: radial-gradient(circle at 20% 20%, rgba(11, 132, 255, 0.12), transparent 32%),
+                radial-gradient(circle at 80% 0%, rgba(11, 132, 255, 0.1), transparent 28%),
+                #05070f;
+    color: #e5ecff;
+    font-family: 'Instrument Sans', 'Segoe UI', Helvetica, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 .error-message{
-    color: red;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    padding: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 5px;
+    color: #ffcdd2;
+    background-color: #2a0f16;
+    border: 1px solid #ff6b6b;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
     text-align: center;
     margin: 20px auto;
-    width: 80%;
-    max-width: 600px;
+    width: 90%;
+    max-width: 560px;
+    box-shadow: 0 8px 24px rgba(255, 107, 107, 0.15);
 }
 
 .form-container {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
-    padding: 0 12px;
+    align-items: center;
+    flex: 1;
+    padding: 32px 16px;
+    overflow: hidden;
 }
 
 form {
-    background: #ffffff;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(173, 216, 230, 0.25);
-    border: 2px solid #add8e6;
+    background: rgba(12, 18, 30, 0.85);
+    padding: 28px 32px;
+    border-radius: 14px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(11, 132, 255, 0.15);
+    border: 1px solid rgba(11, 132, 255, 0.18);
     max-width: 420px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 5px;
+    backdrop-filter: blur(6px);
 }
 
 form label {
     font-weight: 600;
-    color: #1a4f7a;
+    color: #9fb7ff;
     margin-bottom: 4px;
     display: block;
+    letter-spacing: 0.2px;
 }
 
 form input[type="integer"],
+form input[type="text"],
 form input[type="email"],
 form input[type="password"],
 form input[type="password2"] {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 2px solid #b9d9ef;
-    background: #f8fcff;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: 1px solid #1f2b44;
+    background: #0f1729;
+    color: #e5ecff;
     font-size: 14px;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
     box-sizing: border-box;
 }
 
+form input::placeholder {
+    color: #7c8aa6;
+}
+
 form input:focus {
-    border-color: #6bb8e8;
-    box-shadow: 0 0 6px rgba(104, 175, 226, 0.4);
+    border-color: #0b84ff;
+    box-shadow: 0 0 0 3px rgba(11, 132, 255, 0.2);
     outline: none;
 }
 
 form input[type="submit"] {
-    background: linear-gradient(135deg, #87ceeb 0%, #add8e6 100%);
+    background: linear-gradient(135deg, #0b84ff 0%, #0b6fd1 100%);
     border: none;
-    padding: 10px;
-    border-radius: 8px;
-    color: #0d4a7c;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
     font-weight: 700;
     font-size: 15px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 0.4px;
-    box-shadow: 0 2px 6px rgba(173, 216, 230, 0.5);
+    box-shadow: 0 12px 30px rgba(11, 132, 255, 0.25);
 }
 
 form input[type="submit"]:hover {
-    background: linear-gradient(135deg, #6fb7db 0%, #87ceeb 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(173, 216, 230, 0.6);
+    background: linear-gradient(135deg, #0d92ff 0%, #0b84ff 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 16px 38px rgba(11, 132, 255, 0.3);
 }
 
 form a {
     display: block;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 4px;
     text-decoration: none;
-    color: #2c5aa0;
+    color: #9bc5ff;
     font-size: 14px;
-    transition: color 0.2s ease;
+    transition: color 0.15s ease, opacity 0.15s ease;
 }
 
 form a:hover {
-    color: #1a5f9e;
+    color: #c7ddff;
     text-decoration: underline;
+    opacity: 0.9;
 }
-
-
 
 @media (max-width: 480px) {
     form {
-        padding: 22px;
+        padding: 26px;
     }
 
     form input[type="submit"] {
