@@ -15,12 +15,8 @@
 
 <body>
     <header>
-        <?php if (isset($_SESSION['siret'])){
-                include 'HTML/headerConnect.html';
-            }
-            else{
-                include 'HTML/header.html';
-            } 
+        <?php 
+            include './HTML/header.php';
         ?>
     </header>
     

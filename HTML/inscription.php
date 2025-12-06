@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <?php include './header.html'; ?>
+        <?php include './header.php'; ?>
     </header>
     <?php if (isset($_SESSION['error'])): ?>
         <div class="error-message">

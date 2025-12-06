@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <?php include './headerConnect.html'; ?>
+        <?php include './header.php'; ?>
     </header>
     <div class="form-container">
         <form action="../PHP/ajouterInfrastrucutre.php" method="post">

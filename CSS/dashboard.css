@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Instrument Sans', 'Segoe UI', Helvetica, sans-serif;
+}
+
+.dashboard-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.dashboard-container h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: white;
+}
+
+/* Collapsible button styling */
+.collapsible {
+    background-color: rgba(11, 132, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: 2px solid #333;
+    text-align: center;
+    outline: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.collapsible h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.collapsible:hover {
+    background-color: rgba(11, 132, 255, 0.2);
+    border-color: #0b84ff;
+}
+
+.collapsible.active {
+    background-color: rgba(11, 132, 255, 0.3);
+    border-color: #0b84ff;
+}
+
+/* Collapsible content styling */
+.content {
+    padding: 20px;
+    display: none;
+    overflow: hidden;
+    background-color: rgba(30, 30, 30, 0.8);
+    border: 2px solid #333;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 10px;
+}
+
+.content p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.content strong {
+    color: #0b84ff;
+}
+
+.infrastructure-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.infrastructure-item {
+    background-color: rgba(11, 132, 255, 0.05);
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.infrastructure-item:hover {
+    background-color: rgba(11, 132, 255, 0.1);
+    border-color: #0b84ff;
+}
+
+.infrastructure-item h4 {
+    margin: 0 0 10px 0;
+    color: #0b84ff;
+    font-size: 16px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-edit,
+.btn-delete {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background-color: #0b84ff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0969cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(11, 132, 255, 0.3);
+}
+
+.btn-delete {
+    background-color: #ff4444;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #cc0000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin: 20px auto;
+    }
+
+    .dashboard-container h1 {
+        font-size: 24px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+}

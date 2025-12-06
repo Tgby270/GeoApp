@@ -14,6 +14,14 @@
 
             if (password_verify($password, $hashed_password)) {
                 $_SESSION['siret'] = $siret;
+                $id = $bdd -> prepare("Select user_id From Users Where siret = ?");
+                $id -> execute(array($siret));
+                $_SESSION['user_id'] = $id->fetchColumn();
+
+                $admin = $bdd -> prepare('SELECT user_id from Admins where user_id = ?');
+                $admin -> execute(array($_SESSION['user_id']));
+                $_SESSION['is_admin'] = $admin->rowCount() > 0;
+
                 header("Location: ../index.php");
             } else {
                 $_SESSION['error'] = "Mot de passe incorrect";

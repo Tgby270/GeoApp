@@ -5,14 +5,16 @@
         public String $adresse;
         public float $coordonneeX;
         public float $coordonneeY;
+        public int $inf_id;
 
 
-        public function __construct(String $nom, String $type, String $adresse, float $coordonneeX, float $coordonneeY){
+        public function __construct(String $nom, String $type, String $adresse, float $coordonneeX, float $coordonneeY, int $inf_id){
             $this->nom = $nom;
             $this->type = $type;
             $this->adresse = $adresse;
             $this->coordonneeX = $coordonneeX;
             $this->coordonneeY = $coordonneeY;
+            $this->inf_id = $inf_id;
         }
 
         public function getNom(){
@@ -34,5 +36,10 @@
         public function getCoordonneeY(){
             return $this->coordonneeY;
         }   
+
+        public function getInfId(){
+            return $this->inf_id;
+        }
+        
     }
 ?>

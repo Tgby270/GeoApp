@@ -1,3 +1,8 @@
+<?php 
+    session_start();
+    require "../PHP/getInfrastructuresFromDb.php";
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -27,7 +32,7 @@
 <body>
 
     <header>
-        <?php include __DIR__ . '/../HTML/header.html'; ?>
+        <?php include("../HTML/header.php"); ?>
     </header>
 
     <!-- removed inline style, CSS will control size -->
@@ -131,7 +136,18 @@
         });
     </script>
 
-    <?php include 'getInfrastructuresFromDb.php'; ?>
+    <?php
+        $infs = getInfrastructuresFromDb();
+    
+    
+        foreach ($infs as $in){
+            echo "<script>
+                console.log('adding marker from db');
+                createMarkersFromDb('{$in->nom}', {$in->coordonneeX}, {$in->coordonneeY}, '{$in->type}', '{$in->adresse}');
+                console.log('marker added from db');
+            </script>\n";
+        }
+    ?>
 
 
 </body>

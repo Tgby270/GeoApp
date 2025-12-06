@@ -1,0 +1,130 @@
+<?php
+    session_start();
+    require "../PHP/getInfrastructuresFromDb.php";
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['delete_user'], $_POST['user_id'])) {
+            deleteUser(intval($_POST['user_id']));
+            header('Location: adminDashboard.php');
+            exit;
+        }
+
+        if (isset($_POST['delete_infrastructure'], $_POST['inf_id'])) {
+            deleteInfrastructure(intval($_POST['inf_id']));
+            header('Location: adminDashboard.php');
+            exit;
+        }
+    }
+
+    $infrastructures = getInfrastructuresFromDb();
+    $users = getUsersFromDb();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/header.css">
+    <link rel="stylesheet" href="../CSS/dashboard.css">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <?php include './header.php'; ?>
+    </header>
+
+    <div class="dashboard-container">
+        <h1>Admin Dashboard</h1>
+
+    <?php
+
+    echo "<button type=\"button\" class=\"collapsible\">";
+    echo "<h3>Infrastructures (" . count($infrastructures) . ")</h3>";
+    echo "</button>";
+    echo "<div class=\"content\">";
+    echo "<div class=\"infrastructure-list\">";
+    
+    foreach ($infrastructures as $infrastructure) {
+        echo "<div class=\"infrastructure-item\">";
+        echo "<h4>" . htmlspecialchars($infrastructure->getNom()) . "</h4>";
+        echo "<p><strong>Type:</strong> " . htmlspecialchars($infrastructure->getType()) . "</p>";
+        echo "<p><strong>Adresse:</strong> " . htmlspecialchars($infrastructure->getAdresse()) . "</p>";
+        echo "<p><strong>Coordonnées:</strong> (" . htmlspecialchars($infrastructure->getCoordonneeX()) . ", " . htmlspecialchars($infrastructure->getCoordonneeY()) . ")</p>";
+        echo "<div class=\"button-group\">";
+        echo "<form method=\"post\" action=\"adminDashboard.php\">";
+        echo "<input type=\"hidden\" name=\"inf_id\" value=\"" . htmlspecialchars($infrastructure->getInfId()) . "\">";
+        echo "<button type=\"submit\" name=\"edit_infrastructure\" class=\"btn-edit\">Éditer</button>";
+        echo "</form>";
+        echo "<form method=\"post\" action=\"adminDashboard.php\">";
+        echo "<input type=\"hidden\" name=\"inf_id\" value=\"" . htmlspecialchars($infrastructure->getInfId()) . "\">";
+        echo "<button type=\"submit\" name=\"delete_infrastructure\" class=\"btn-delete\">Supprimer</button>";
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+    }
+    
+    echo "</div>";
+    echo "</div>";
+
+
+    echo "<button type=\"button\" class=\"collapsible\">";
+    echo "<h3>Users (" . count($users) . ")</h3>";
+    echo "</button>";
+    echo "<div class=\"content\">";
+    echo "<div class=\"infrastructure-list\">";
+
+    foreach ($users as $user) {
+        if ($user->getUserId() <= 0) {
+            continue;
+        }
+        echo "<div class=\"infrastructure-item\">";
+        echo "<h4>" . htmlspecialchars($user->getUserId()) . "</h4>";
+        echo "<p><strong>Siret:</strong> " . htmlspecialchars($user->getUsername()) . "</p>";
+        echo "<p><strong>Email:</strong> " . htmlspecialchars($user->getEmail()) . "</p>";
+        echo "<div class=\"button-group\">";
+        echo "<form method=\"post\" action=\"adminDashboard.php\">";
+        echo "<input type=\"hidden\" name=\"user_id\" value=\"" . htmlspecialchars($user->getUserId()) . "\">";
+        echo "<button type=\"submit\" name=\"edit_user\" class=\"btn-edit\">Éditer</button>";
+        echo "</form>";
+        echo "<form method=\"post\" action=\"adminDashboard.php\">";
+        echo "<input type=\"hidden\" name=\"user_id\" value=\"" . htmlspecialchars($user->getUserId()) . "\">";
+        echo "<button type=\"submit\" name=\"delete_user\" class=\"btn-delete\">Supprimer</button>";
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+    }
+
+    echo "</div>";
+    echo "</div>";
+    
+    ?>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'dashboardCollapsibleState';
+        const coll = document.getElementsByClassName('collapsible');
+        const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+        for (let i = 0; i < coll.length; i++) {
+            const content = coll[i].nextElementSibling;
+
+            if (state[i]) {
+                coll[i].classList.add('active');
+                content.style.display = 'block';
+            }
+
+            coll[i].addEventListener('click', function () {
+                const isOpen = content.style.display === 'block';
+                this.classList.toggle('active');
+                content.style.display = isOpen ? 'none' : 'block';
+                state[i] = !isOpen;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            });
+        }
+    </script>
+
+</body>
+
+</html>
