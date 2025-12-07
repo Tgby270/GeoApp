@@ -139,6 +139,36 @@ body {
     box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
 }
 
+.add-infrastructure-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 50px auto 20px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #0b84ff 0%, #0b6fd1 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 8px 20px rgba(11, 132, 255, 0.25);
+}
+
+.add-infrastructure-btn:hover {
+    background: linear-gradient(135deg, #0d92ff 0%, #0b84ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(11, 132, 255, 0.35);
+}
+
+.add-infrastructure-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(11, 132, 255, 0.25);
+}
+
 @media (max-width: 768px) {
     .dashboard-container {
         margin: 20px auto;
@@ -150,5 +180,11 @@ body {
 
     .button-group {
         flex-direction: column;
+    }
+
+    .add-infrastructure-btn {
+        margin: 20px auto;
+        padding: 12px 20px;
+        font-size: 14px;
     }
 }

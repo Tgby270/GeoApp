@@ -28,7 +28,7 @@
 
         <?php elseif ($isloggedin && !$isAdmin) : ?>
             <div class="nav-right">
-            <a href="/GeoApp/HTML/ajouterInfrastructure.php" id="header-log-in">Vos Infrastructures</a>
+            <a href="/GeoApp/HTML/userDashboard.php" id="header-log-in">Vos Infrastructures</a>
             <a href="/GeoApp/HTML/deconnection.php" id="header-sign-up">Se Deconnecter</a>
         </div>
 

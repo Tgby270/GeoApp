@@ -81,4 +81,35 @@
         $stmt = $bdd->prepare('DELETE FROM Users WHERE user_id = ? AND user_id != 0');
         $stmt->execute([$user_id]);
     }
+
+    function getUserInfrastructures($user_id) {
+        global $bdd;
+        $Infs = [];
+
+        $stmt = $bdd->prepare('SELECT COUNT(*) from Infrastructure where user_id = ?');
+        $stmt->execute([$user_id]);
+        $count = $stmt->fetchColumn();
+
+        if ($count <= 0) {
+            die('no data found');
+        }
+
+        else {
+            $stmt = $bdd->prepare('SELECT * from Infrastructure where user_id = ?');
+            $stmt->execute([$user_id]);
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $inf = new Infrastructures(
+                    $row['nom'],
+                    $row['type'],
+                    $row['adresse'],
+                    floatval($row['coordonneeX']),
+                    floatval($row['coordonneeY']),
+                    intval($row['id'])
+                );
+                array_push($Infs, $inf);
+            }
+        }
+        return $Infs;
+    }
 ?>
