@@ -12,7 +12,13 @@
             <a href="/GeoApp/index.php">
             <img src="/GeoApp/ressource/logo.png" alt="Website Logo" id="header-logo"/>
             </a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+        <div class="nav-menu" id="nav-menu">
         <div class="nav-center">
             <a href="/GeoApp/PHP/map.php" id="header-map">Map</a>
             <a href="/GeoApp/index.php" id="header-home-link">Menu</a>
@@ -38,4 +44,22 @@
             <a href="/GeoApp/HTML/deconnection.php" id="header-sign-up">Se Deconnecter</a>
         </div>
         <?php endif; ?>
+        </div>
 </nav>
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+</script>
