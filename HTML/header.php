@@ -20,9 +20,8 @@
         </div>
         <div class="nav-menu" id="nav-menu">
         <div class="nav-center">
-            <a href="/GeoApp/PHP/map.php" id="header-map">Map</a>
+            <a href="/GeoApp/PHP/map.php" id="header-map">Carte</a>
             <a href="/GeoApp/index.php" id="header-home-link">Menu</a>
-            <a href="/GeoApp/about.html" id="header-about">À Propos</a>
         </div>
 
         <?php if (!$isloggedin && !$isAdmin) : ?>
@@ -40,7 +39,7 @@
 
         <?php elseif ($isloggedin && $isAdmin) : ?>
             <div class="nav-right">
-            <a href="/GeoApp/HTML/adminDashboard.php" id="header-log-in">Admin Dashboard</a>
+            <a href="/GeoApp/HTML/adminDashboard.php" id="header-log-in">Panneau de contrôle</a>
             <a href="/GeoApp/HTML/deconnection.php" id="header-sign-up">Se Deconnecter</a>
         </div>
         <?php endif; ?>

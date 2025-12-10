@@ -117,6 +117,17 @@ function createMarkers(data) {
                 str += '<br>• Douches';
             }
 
+            if(facility.equip_acces_handi_mobilite){
+                str += '<br>• Accessible aux personnes en situation de handicap moteur';
+            }
+            if(facility.equip_acces_handi_sensoriel){
+                str += '<br>• Accessible aux personnes en situation de handicap sensoriel';
+            }
+
+            btnStyle = 'style="margin-top:5px;padding:5px 10px;background-color:#007bff;color:white;border:none;border-radius:3px;cursor:pointer;"';
+
+            str += '</br><form method="GET" action="../HTML/calendar.php"><button type="submit" name = "infid" value = "'+facility.equip_numero+'" ' + btnStyle + '>Voir les détails</button></form>';
+
             marker.bindPopup(str);
         } else {
             noCoordCount++;
@@ -126,7 +137,7 @@ function createMarkers(data) {
     console.log('Number of facilities without coordinates:', noCoordCount);
 }
 
-function createMarkersFromDb(Name, Lat, Lon, Type, Address) {
+function createMarkersFromDb(Name, Lat, Lon, Type, Address, infid) {
     // Reuse a single cluster layer so multiple DB markers are kept on the map
     if (!window.markersDb) {
         window.markersDb = new L.MarkerClusterGroup({
@@ -136,7 +147,9 @@ function createMarkersFromDb(Name, Lat, Lon, Type, Address) {
     }
 
     const marker = L.marker([Lat, Lon]);
-    const str = `<b>${Name}</b><br>${Address}<br><i>${Type}</i>`;
+    let str = `<b>${Name}</b><br>${Address}<br><i>${Type}</i>`;
+    btnStyle = 'style="margin-top:5px;padding:5px 10px;background-color:#007bff;color:white;border:none;border-radius:3px;cursor:pointer;"';
+    str += '</br><form method="GET" action="../HTML/calendar.php"><button type="submit" name = "infid" value = "'+infid+'" ' + btnStyle + '>Voir les détails</button></form>';
     marker.bindPopup(str);
     window.markersDb.addLayer(marker);
 }
@@ -422,6 +435,10 @@ function getSelected0ptions() {
     return Array.from(selectedOptions);
 }
 
+function getSelectedHandicapOptions() {
+    return Array.from(selectedOptions);
+}
+
 function getSearchVille() {
     const searchInput = document.getElementById("locationSearch");
     return searchInput ? searchInput.value : '';
@@ -460,6 +477,20 @@ function applyFilters() {
         if (optionsClause) {
             if(whereClause === '') whereClause += optionsClause;
             else whereClause += ' AND ' + optionsClause;
+        }
+    }
+
+    const selectedHandicapOptions = getSelectedHandicapOptions();
+    if (selectedHandicapOptions.length > 0) {
+        const handicapClause = selectedHandicapOptions.map(option => {
+            if (option === 'handiM') return 'equip_acces_handi_mobilite is not null';
+            if (option === 'handiS') return 'equip_acces_handi_sensoriel is not null';
+            return '';
+        }).filter(clause => clause !== '').join(' OR ');
+
+        if (handicapClause) {
+            if(whereClause === '') whereClause += `(${handicapClause})`;
+            else whereClause += ' AND (' + handicapClause + ')';
         }
     }
 

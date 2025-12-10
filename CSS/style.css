@@ -105,6 +105,8 @@ html, body {
     cursor: pointer;
     background: #0b84ff;
     color: white;
+    position: relative;
+    top: 40px;
 }
 
 #enter-map:active { transform: translateY(1px); }

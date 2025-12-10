@@ -19,20 +19,20 @@ body {
 form {
     background: white;
     backdrop-filter: blur(10px);
-    padding: 30px;
+    padding: 24px;
     border-radius: 16px;
     border: 2px solid #333;
-    max-width: 500px;
+    max-width: 450px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     box-shadow: 0 8px 32px rgba(11, 132, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 form h2 {
     color: #1a1a1a;
-    font-size: 28px;
+    font-size: 22px;
     margin: 0 0 4px 0;
     text-align: center;
 }
@@ -48,12 +48,12 @@ form label {
 form input[type="text"],
 form input[type="number"] {
     width: 100%;
-    padding: 12px 14px;
+    padding: 10px 12px;
     border-radius: 10px;
     border: 2px solid #ddd;
     background: #f9f9f9;
     color: #1a1a1a;
-    font-size: 14px;
+    font-size: 13px;
     transition: all 0.3s ease;
     box-sizing: border-box;
 }
@@ -108,48 +108,18 @@ form input[type="number"]:focus {
     outline: none;
 }
 
-form input[type="submit"] {
-    background: #0b84ff;
-    border: none;
-    padding: 0;
-    border-radius: 10px;
-    color: white;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 12px;
-    height: 48px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-form input[type="submit"]:hover {
-    background: #0969cc;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(11, 132, 255, 0.4);
-}
-
-form input[type="submit"]:active {
-    transform: translateY(0);
-}
-
 .btn-submit,
 .btn-cancel {
     border: none;
     padding: 0;
     border-radius: 10px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    height: 48px;
+    height: 42px;
     box-sizing: border-box;
     flex: 1;
     display: flex;
@@ -184,64 +154,6 @@ form input[type="submit"]:active {
     transform: translateY(0);
 }
 
-.options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    padding: 12px;
-    background: #f9f9f9;
-    border-radius: 10px;
-    border: 2px solid #ddd;
-}
-
-.options-section {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.options-title {
-    font-weight: 600;
-    color: #333;
-    font-size: 13px;
-    margin: 0 0 4px 0;
-}
-
-.options-group {
-    display: flex;
-    gap: 12px;
-}
-
-.options label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 500;
-    color: #333;
-    margin: 0;
-    padding: 6px 8px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    flex: 1;
-}
-
-.options label:hover {
-    background: rgba(11, 132, 255, 0.05);
-}
-
-.options input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    margin-bottom: 0;
-    cursor: pointer;
-    accent-color: #0b84ff;
-    flex-shrink: 0;
-}
-
 @media (max-width: 768px) {
     .form-container {
         min-height: calc(100vh - 120px);
@@ -250,7 +162,7 @@ form input[type="submit"]:active {
 
     form {
         padding: 30px;
-        gap: 2px;
+        gap: 8px;
     }
 
     form h2 {
@@ -266,14 +178,15 @@ form input[type="submit"]:active {
 
     form {
         padding: 20px;
-        gap: 1px;
+        gap: 6px;
     }
 
     form h2 {
         font-size: 20px;
     }
 
-    form input[type="submit"] {
+    .btn-submit,
+    .btn-cancel {
         font-size: 14px;
     }
 }

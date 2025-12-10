@@ -17,6 +17,11 @@
             header('Location: adminDashboard.php');
             exit;
         }
+
+        if (isset($_POST['edit_infrastructure'], $_POST['inf_id'])) {
+            header('Location: editInfrastructure.php?inf_id=' . intval($_POST['inf_id']));
+            exit;
+        }
     }
 
     $infrastructures = getInfrastructuresFromDb();
@@ -39,7 +44,7 @@
     </header>
 
        <div class="dashboard-container">
-        <h1>Admin Dashboard</h1>
+        <h1>Panneau de contrôle</h1>
 
         <?php
 
@@ -54,6 +59,7 @@
             echo "<h4>" . htmlspecialchars($infrastructure->getNom()) . "</h4>";
             echo "<p><strong>Type:</strong> " . htmlspecialchars($infrastructure->getType()) . "</p>";
             echo "<p><strong>Adresse:</strong> " . htmlspecialchars($infrastructure->getAdresse()) . "</p>";
+            echo "<p><strong>Ville:</strong> " . htmlspecialchars($infrastructure->getVille()) . "</p>";
             echo "<p><strong>Coordonnées:</strong> (" . htmlspecialchars($infrastructure->getCoordonneeX()) . ", " . htmlspecialchars($infrastructure->getCoordonneeY()) . ")</p>";
             echo "<div class=\"button-group\">";
             echo "<form method=\"post\" action=\"adminDashboard.php\">";
@@ -88,10 +94,6 @@
             echo "<div class=\"button-group\">";
             echo "<form method=\"post\" action=\"adminDashboard.php\">";
             echo "<input type=\"hidden\" name=\"user_id\" value=\"" . htmlspecialchars($user->getUserId()) . "\">";
-            echo "<button type=\"submit\" name=\"edit_user\" class=\"btn-edit\">Éditer</button>";
-            echo "</form>";
-            echo "<form method=\"post\" action=\"adminDashboard.php\">";
-            echo "<input type=\"hidden\" name=\"user_id\" value=\"" . htmlspecialchars($user->getUserId()) . "\">";
             echo "<button type=\"submit\" name=\"delete_user\" class=\"btn-delete\">Supprimer</button>";
             echo "</form>";
             echo "</div>";
@@ -105,7 +107,6 @@
 
         <div id = "add">
             <button onclick="window.location.href='ajouterInfrastructure.php'" class="add-infrastructure-btn">Ajouter une Infrastructure</button>
-            <button onclick="window.location.href='ajouterUser.php'" class="add-infrastructure-btn">Ajouter un Utilisateur</button>
         </div>
 
     <script>

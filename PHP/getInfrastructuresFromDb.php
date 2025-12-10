@@ -2,6 +2,7 @@
     require_once 'connexionBDD.php';
     require_once 'infrastructures.php';
     require_once 'Users.php';
+    require_once 'events.php';
 
     function getInfrastructuresFromDb() {
         global $bdd;
@@ -24,6 +25,7 @@
                     $row['nom'],
                     $row['type'],
                     $row['adresse'],
+                    $row['ville'],
                     floatval($row['coordonneeX']),
                     floatval($row['coordonneeY']),
                     intval($row['id'])
@@ -31,6 +33,54 @@
                 array_push($Infs, $inf);
             }
         }
+        return $Infs;
+    }
+
+    function getInfrastructuresFromDbFiltered($filters = []) {
+        global $bdd;
+        $Infs = [];
+        
+        // Build the SQL query with filters
+        $sql = 'SELECT * FROM Infrastructure WHERE 1=1';
+        $params = [];
+        
+        // Filter by type if provided
+        if (!empty($filters['type'])) {
+            $sql .= ' AND type = ?';
+            $params[] = $filters['type'];
+        }
+        
+        // Filter by ville/address if provided
+        if (!empty($filters['ville'])) {
+            $sql .= ' AND (ville LIKE ? OR adresse LIKE ?)';
+            $searchTerm = '%' . $filters['ville'] . '%';
+            $params[] = $searchTerm;
+            $params[] = $searchTerm;
+        }
+        
+        // Filter by multiple types if provided as array
+        if (!empty($filters['types']) && is_array($filters['types'])) {
+            $placeholders = str_repeat('?,', count($filters['types']) - 1) . '?';
+            $sql .= ' AND type IN (' . $placeholders . ')';
+            $params = array_merge($params, $filters['types']);
+        }
+        
+        $stmt = $bdd->prepare($sql);
+        $stmt->execute($params);
+        
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $inf = new Infrastructures(
+                $row['nom'],
+                $row['type'],
+                $row['adresse'],
+                $row['ville'],
+                floatval($row['coordonneeX']),
+                floatval($row['coordonneeY']),
+                intval($row['id'])
+            );
+            array_push($Infs, $inf);
+        }
+        
         return $Infs;
     }
 
@@ -103,6 +153,7 @@
                     $row['nom'],
                     $row['type'],
                     $row['adresse'],
+                    $row['ville'],
                     floatval($row['coordonneeX']),
                     floatval($row['coordonneeY']),
                     intval($row['id'])
@@ -111,5 +162,88 @@
             }
         }
         return $Infs;
+    }
+
+    function getCalendarEventsThisWeekDB($inf_id){
+        global $bdd;
+        $events = [];
+
+        $firstday = date('Y-m-d', strtotime("this week"));
+        $lastday = date('Y-m-d', strtotime("this week +6 days"));
+
+        $stmt = $bdd->prepare('SELECT * from Calendrier where inf_id = ? and cal_date_debut >= ? and cal_date_fin <= ?');
+        $stmt->execute([$inf_id, $firstday, $lastday]);
+
+        
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $event = new Events(
+                $row['inf_id'],
+                $row['cal_libelle'],
+                $row['cal_date_debut'],
+                $row['cal_date_fin'],
+                $row['cal_horaire_debut'],
+                $row['cal_horaire_fin'],
+                $row['user_id']
+            );
+            array_push($events, $event);
+        }
+        return $events;
+    }
+
+        function getCalendarEventsThisWeekAPI($inf_id){
+        global $bdd;
+        $events = [];
+
+        $firstday = date('Y-m-d', strtotime("this week"));
+        $lastday = date('Y-m-d', strtotime("this week +6 days"));
+
+        $stmt = $bdd->prepare('SELECT * from CalendrierAPI where inf_id = ? and cal_date_debut >= ? and cal_date_fin <= ?');
+        $stmt->execute([$inf_id, $firstday, $lastday]);
+
+        
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $event = new Events(
+                $row['inf_id'],
+                $row['cal_libelle'],
+                $row['cal_date_debut'],
+                $row['cal_date_fin'],
+                $row['cal_horaire_debut'],
+                $row['cal_horaire_fin'],
+                $row['user_id']
+            );
+            array_push($events, $event);
+        }
+        return $events;
+    }
+
+    function insertCalendarEvent($inf_id, $libelle, $date_debut, $date_fin, $heure_debut, $heure_fin, $uid) {
+        global $bdd;
+
+        if($heure_fin > 17) {
+            return "Les événements ne peuvent pas se terminer après 17h.";
+        }
+
+        $stmt = $bdd->prepare("SELECT * from Calendrier where cal_date_debut=? AND cal_horaire_debut = ? AND cal_horaire_fin = ?");
+        $stmt->execute([$date_debut, $heure_debut, $heure_fin]);
+        $existingEvent = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($existingEvent) {
+            return "Un événement existe déjà à cette date et heure.";
+        }
+
+        if(is_numeric($inf_id)){
+            $stmt = $bdd->prepare('INSERT INTO Calendrier (inf_id, cal_libelle, cal_date_debut, cal_date_fin, cal_horaire_debut, cal_horaire_fin, user_id) VALUES (?,?,?,?,?,?,?)');
+        }
+        else{
+            $stmt = $bdd->prepare('INSERT INTO CalendrierAPI (inf_id, cal_libelle, cal_date_debut, cal_date_fin, cal_horaire_debut, cal_horaire_fin, user_id) VALUES (?,?,?,?,?,?,?)');
+        }
+        try {
+            $stmt->execute([$inf_id, $libelle, $date_debut, $date_fin, $heure_debut, $heure_fin, $uid]);
+            return true;
+        } catch (Exception $e) {
+            return 'Error inserting event: ' . $e->getMessage();
+        }
     }
 ?>

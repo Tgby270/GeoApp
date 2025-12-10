@@ -1,6 +1,7 @@
 <?php
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,13 +17,16 @@ session_start();
     <div class="form-container">
         <form action="../PHP/ajouterInfrastrucutre.php" method="post">
             <label for="nom">Nom de l'infrastructure : </label>
-            <input type="text" id="nom" name="nom" required><br><br>
+            <input type="text" id="nom" name="nom" required>
 
             <label for="type">Type d'infrastructure : </label>
-            <input type="text" id="type" name="type" required><br><br>
+            <input type="text" id="type" name="type" required>
 
             <label for="adresse">Adresse : </label>
-            <input type="text" id="adresse" name="adresse" required><br><br>
+            <input type="text" id="adresse" name="adresse" required>
+
+            <label for = "ville">Ville : </label>
+            <input type="text" id="ville" name="ville" required>
 
             <div class="coordinates-row">
                 <div class="coord-group">
@@ -32,6 +36,36 @@ session_start();
                 <div class="coord-group">
                     <label for="coordonneeY">Latitude : </label>
                     <input type="number" id="coordonneeY" name="coordonneeY" step = "any"required>
+                </div>
+            </div>
+
+            <div class="options">
+                <div class="options-section">
+                    <p class="options-title">Accessibilité handicap :</p>
+                    <div class="options-group">
+                        <label for="moteur">
+                            <input type="checkbox" id="moteur" name="moteur">
+                            Moteur
+                        </label>
+                        <label for="sensoriel">
+                            <input type="checkbox" id="sensoriel" name="sensoriel">
+                            Sensoriel
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <p class="options-title">Équipements :</p>
+                    <div class="options-group">
+                        <label for="sanitaires">
+                            <input type="checkbox" id="sanitaires" name="sanitaires">
+                            Sanitaires
+                        </label>
+                        <label for="douches">
+                            <input type="checkbox" id="douches" name="douches">
+                            Douches
+                        </label>
+                    </div>
                 </div>
             </div>
 

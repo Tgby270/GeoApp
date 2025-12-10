@@ -29,7 +29,7 @@
             <spline-viewer id="spline-viewer" url="https://prod.spline.design/8oXCdWMzJ17pHIwf/scene.splinecode"></spline-viewer>
         </div>
 
-        <button id="enter-map">Open Map</button>
+        <button id="enter-map">Ouvrir la carte</button>
     </div>
 
     <!-- Overlay transition -->
