@@ -141,7 +141,7 @@
         $count = $stmt->fetchColumn();
 
         if ($count <= 0) {
-            die('no data found');
+            return $Infs;
         }
 
         else {
@@ -245,5 +245,38 @@
         } catch (Exception $e) {
             return 'Error inserting event: ' . $e->getMessage();
         }
+    }
+
+    function getInfOptions($inf_id) {
+        global $bdd;
+        $options = [
+            'sanitaires' => 'false',
+            'douche' => 'false',
+            'handiM' => 'false',
+            'handiS' => 'false'
+        ];
+
+        $stmt = $bdd->prepare('
+            SELECT Option_infrastructure.option_nom 
+            FROM infOption 
+            JOIN Option_infrastructure ON infOption.opt_code = Option_infrastructure.code 
+            WHERE infOption.inf_id = ?
+        ');
+        $stmt->execute([$inf_id]);
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $optionName = $row['option_nom'];
+            if ($optionName === 'sanitaires') {
+                $options['sanitaires'] = 'true';
+            } elseif ($optionName === 'douche') {
+                $options['douche'] = 'true';
+            } elseif ($optionName === 'mobilite') {
+                $options['handiM'] = 'true';
+            } elseif ($optionName === 'sensoriel') {
+                $options['handiS'] = 'true';
+            }
+        }
+
+        return $options;
     }
 ?>

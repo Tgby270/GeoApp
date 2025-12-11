@@ -71,7 +71,6 @@ session_start();
 
            <input type="submit" value="Ajouter Infrastructure">
         </form>
-        <?php include '../PHP/ajouterInfrastrucutre.php'; ?>
     </div>
 </body>
 </html>

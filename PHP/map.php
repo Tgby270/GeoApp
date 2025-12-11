@@ -202,9 +202,12 @@ require "../PHP/getInfrastructuresFromDb.php";
     }
 
     foreach ($infs as $in) {
+
+        $options = getInfOptions($in->inf_id);
+
         echo "<script>
                 console.log('adding marker from db');
-                createMarkersFromDb('{$in->nom}', {$in->coordonneeX}, {$in->coordonneeY}, '{$in->type}', '{$in->adresse}', '{$in->inf_id}');
+                createMarkersFromDb('{$in->nom}', {$in->coordonneeX}, {$in->coordonneeY}, '{$in->type}', '{$in->adresse}', '{$in->ville}'," . json_encode($options) . ",'{$in->inf_id}');
                 console.log('marker added from db');
             </script>\n";
     }

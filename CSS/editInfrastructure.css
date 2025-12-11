@@ -2,18 +2,18 @@ body {
     background-color: black;
     font-family: 'Instrument Sans', 'Segoe UI', Helvetica, sans-serif;
     margin: 0;
-    overflow: hidden;
     height: 100vh;
 }
 
 .form-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: calc(100vh - 80px);
     padding: 20px 12px;
     background: linear-gradient(135deg, rgba(11, 132, 255, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 form {
@@ -28,6 +28,7 @@ form {
     flex-direction: column;
     gap: 5px;
     box-shadow: 0 8px 32px rgba(11, 132, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
 }
 
 form h2 {
@@ -152,6 +153,64 @@ form input[type="number"]:focus {
 .btn-submit:active,
 .btn-cancel:active {
     transform: translateY(0);
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+}
+
+.options-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.options-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 13px;
+    margin: 0 0 4px 0;
+}
+
+.options-group {
+    display: flex;
+    gap: 12px;
+}
+
+.options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    flex: 1;
+}
+
+.options label:hover {
+    background: rgba(11, 132, 255, 0.05);
+}
+
+.options input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    margin-bottom: 0;
+    cursor: pointer;
+    accent-color: #0b84ff;
+    flex-shrink: 0;
 }
 
 @media (max-width: 768px) {

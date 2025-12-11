@@ -29,21 +29,21 @@ body {
   transform: translateX(-50%);
   z-index: 1000;
   padding: 14px 28px;
-  background: #0b84ff;
+  background: #dc143c;
   color: #fff;
   border: none;
   border-radius: 12px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(11, 132, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
   transition: all 0.3s ease;
   width: fit-content;
 }
 
 #openFilters:hover {
   transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 6px 16px rgba(11, 132, 255, 0.4);
+  box-shadow: 0 6px 16px rgba(220, 20, 60, 0.4);
   background: white;
   color: black;
 }
@@ -93,7 +93,7 @@ body {
 #filters_modal h2 {
   margin: 0;
   padding: 25px 30px;
-  background: #0b84ff;
+  background: #dc143c;
   color: #fff;
   font-size: 20px;
   font-weight: 600;
@@ -134,10 +134,11 @@ body {
   display: block;
   margin-bottom: 8px;
   margin-top: 15px;
-  color: #2c3e50;
+  color: #ffd700;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 #filtersContainer > label:first-of-type {
@@ -154,7 +155,7 @@ body {
   font-size: 14px;
   transition: all 0.3s ease;
   background-color: #fafafa;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%230b84ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23dc143c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>');
   background-repeat: no-repeat;
   background-position: 15px center;
   background-size: 18px;
@@ -162,9 +163,9 @@ body {
 
 #filtersContainer input[type="text"]:focus {
   outline: none;
-  border-color: #0b84ff;
+  border-color: #dc143c;
   background-color: #fff;
-  box-shadow: 0 4px 12px rgba(11, 132, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(220, 20, 60, 0.15);
 }
 
 #filtersContainer input[type="text"]::placeholder {
@@ -178,7 +179,7 @@ body {
   -webkit-appearance: none;
   appearance: none;
   height: 6px;
-  background: linear-gradient(to right, #0b84ff 0%, #0b84ff 10%, #e0e0e0 10%, #e0e0e0 100%);
+  background: linear-gradient(to right, #dc143c 0%, #dc143c 10%, #e0e0e0 10%, #e0e0e0 100%);
   border-radius: 3px;
   outline: none;
 }
@@ -187,7 +188,7 @@ body {
   -webkit-appearance: none;
   width: 20px;
   height: 20px;
-  background: #0b84ff;
+  background: #dc143c;
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -196,13 +197,13 @@ body {
 
 #filtersContainer input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 3px 10px rgba(11, 132, 255, 0.4);
+  box-shadow: 0 3px 10px rgba(220, 20, 60, 0.4);
 }
 
 #filtersContainer input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: #0b84ff;
+  background: #dc143c;
   border-radius: 50%;
   cursor: pointer;
   border: none;
@@ -215,9 +216,9 @@ body {
   font-weight: 600;
   font-size: 13px;
   color: #fff;
-  background: #0b84ff;
+  background: #dc143c;
   border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(11, 132, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(220, 20, 60, 0.3);
   min-width: 60px;
   text-align: center;
 }
@@ -245,7 +246,7 @@ body {
 }
 
 .equipment-grid::-webkit-scrollbar-thumb {
-  background: #0b84ff;
+  background: #dc143c;
   border-radius: 4px;
 }
 
@@ -265,15 +266,15 @@ body {
 }
 
 .equipment-card:hover {
-  border-color: #0b84ff;
-  box-shadow: 0 4px 12px rgba(11, 132, 255, 0.15);
+  border-color: #dc143c;
+  box-shadow: 0 4px 12px rgba(220, 20, 60, 0.15);
   transform: translateY(-2px);
 }
 
 .equipment-card.selected {
-  background: #0b84ff;
-  border-color: #0b84ff;
-  box-shadow: 0 4px 15px rgba(11, 132, 255, 0.3);
+  background: #dc143c;
+  border-color: #ffd700;
+  box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
 }
 
 .equipment-card input[type="checkbox"] {
@@ -281,7 +282,7 @@ body {
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #0b84ff;
+  accent-color: #dc143c;
   flex-shrink: 0;
 }
 
@@ -322,15 +323,15 @@ body {
 }
 
 .toggle-checkbox-btn:hover {
-  border-color: #0b84ff;
-  background-color: rgba(11, 132, 255, 0.08);
+  border-color: #dc143c;
+  background-color: rgba(220, 20, 60, 0.08);
 }
 
 .toggle-checkbox-btn.active {
-  background: #0b84ff;
-  border-color: #0b84ff;
+  background: #dc143c;
+  border-color: #dc143c;
   color: #fff;
-  box-shadow: 0 2px 8px rgba(11, 132, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(220, 20, 60, 0.3);
 }
 
 .checkbox-icon {
@@ -357,15 +358,15 @@ body {
   margin-bottom: 10px;
 }
 
-.selected-count {
+selected-count {
   text-align: center;
   font-size: 13px;
-  color: #fff;
+  color: #ffd700;
   font-weight: 600;
   padding: 10px 20px;
-  background: #0b84ff;
+  background: #dc143c;
   border-radius: 25px;
-  box-shadow: 0 3px 10px rgba(11, 132, 255, 0.25);
+  box-shadow: 0 3px 10px rgba(220, 20, 60, 0.25);
   letter-spacing: 0.5px;
 }
 
@@ -386,7 +387,7 @@ body {
   width: 100%;
   padding: 14px 24px;
   margin-top: 20px;
-  background: #0b84ff;
+  background: #dc143c;
   color: #fff;
   border: none;
   border-radius: 25px;
@@ -395,20 +396,20 @@ body {
   letter-spacing: 0.5px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(11, 132, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
   text-transform: uppercase;
 }
 
 .apply-filters-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(11, 132, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
   background: white;
   color: black;
 }
 
 .apply-filters-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(11, 132, 255, 0.3);
+  box-shadow: 0 2px 10px rgba(220, 20, 60, 0.3);
 }
 
 /* Fix white lines on Leaflet map tiles */

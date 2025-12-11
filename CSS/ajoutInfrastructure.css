@@ -2,18 +2,18 @@ body {
     background-color: black;
     font-family: 'Instrument Sans', 'Segoe UI', Helvetica, sans-serif;
     margin: 0;
-    overflow: hidden;
     height: 100vh;
 }
 
 .form-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: calc(100vh - 80px);
     padding: 20px 12px;
     background: linear-gradient(135deg, rgba(11, 132, 255, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 form {

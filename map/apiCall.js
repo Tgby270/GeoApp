@@ -75,6 +75,9 @@ async function getAllSportsEquipments(totalRecords, options = {}) {
 function createMarkers(data) {
     if (!data || data.length === 0) {
         console.log('No results found');
+        if(window.markers){
+            map.removeLayer(window.markers);
+        }
         return;
     }
 
@@ -118,15 +121,15 @@ function createMarkers(data) {
             }
 
             if(facility.equip_acces_handi_mobilite){
-                str += '<br>• Accessible aux personnes en situation de handicap moteur';
+                str += '<br>• Accessiblilité aux handicaps moteur';
             }
             if(facility.equip_acces_handi_sensoriel){
-                str += '<br>• Accessible aux personnes en situation de handicap sensoriel';
+                str += '<br>• Accessibilité aux handicaps sensoriel';
             }
 
             btnStyle = 'style="margin-top:5px;padding:5px 10px;background-color:#007bff;color:white;border:none;border-radius:3px;cursor:pointer;"';
 
-            str += '</br><form method="GET" action="../HTML/calendar.php"><button type="submit" name = "infid" value = "'+facility.equip_numero+'" ' + btnStyle + '>Voir les détails</button></form>';
+            str += '</br><form method="GET" action="../HTML/calendar.php"><button type="submit" name = "infid" value = "'+facility.equip_numero+'" ' + btnStyle + '>Réserver</button></form>';
 
             marker.bindPopup(str);
         } else {
@@ -137,7 +140,7 @@ function createMarkers(data) {
     console.log('Number of facilities without coordinates:', noCoordCount);
 }
 
-function createMarkersFromDb(Name, Lat, Lon, Type, Address, infid) {
+function createMarkersFromDb(Name, Lat, Lon, Type, Address, ville, options, infid) {
     // Reuse a single cluster layer so multiple DB markers are kept on the map
     if (!window.markersDb) {
         window.markersDb = new L.MarkerClusterGroup({
@@ -147,9 +150,25 @@ function createMarkersFromDb(Name, Lat, Lon, Type, Address, infid) {
     }
 
     const marker = L.marker([Lat, Lon]);
-    let str = `<b>${Name}</b><br>${Address}<br><i>${Type}</i>`;
+    let str = `<b>${Name}</b><br>${Address}<br>${ville}<br><i>${Type}</i>`;
+
+    if(options){
+        if(options.sanitaires && options.sanitaires === 'true'){
+            str += '<br>• Sanitaires';
+        }
+        if(options.douche && options.douche === 'true'){
+            str += '<br>• Douches';
+        }
+        if(options.handiM && options.handiM === 'true'){
+            str += '<br>• Accessiblilité aux handicaps moteur';
+        }
+        if(options.handiS && options.handiS === 'true'){
+            str += '<br>• Accessibilité aux handicaps sensoriel';
+        }
+    }
+
     btnStyle = 'style="margin-top:5px;padding:5px 10px;background-color:#007bff;color:white;border:none;border-radius:3px;cursor:pointer;"';
-    str += '</br><form method="GET" action="../HTML/calendar.php"><button type="submit" name = "infid" value = "'+infid+'" ' + btnStyle + '>Voir les détails</button></form>';
+    str += '</br><form method="GET" action="../HTML/calendar.php"><button type="submit" name = "infid" value = "'+infid+'" ' + btnStyle + '>Réserver</button></form>';
     marker.bindPopup(str);
     window.markersDb.addLayer(marker);
 }
@@ -502,7 +521,6 @@ function applyFilters() {
         }
         else{
             // Check if we already have user coordinates
-            getUserLocation();
             if(userLatitude !== null && userLongitude !== null){
                 console.log(`Using cached user coordinates: Lat ${userLatitude}, Lon ${userLongitude}`);
                 const radiusMeters = rayon * 1000; // Convert km to meters
@@ -513,6 +531,7 @@ function applyFilters() {
                 
                 console.log('Applying filters with where clause:', whereClause);
                 loadmap(map, whereClause);
+                loadDatabaseInfrastructures();
             } else {
                 // Need to get user location first
                 console.log('Getting user location...');
@@ -523,6 +542,25 @@ function applyFilters() {
                             userLongitude = position.coords.longitude;
                             console.log(`Got user location: Lat ${userLatitude}, Lon ${userLongitude}`);
                             
+                            // Add red user location marker
+                            const redIcon = L.icon({
+                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            });
+                            
+                            if (window.userMarker) {
+                                map.removeLayer(window.userMarker);
+                            }
+                            
+                            window.userMarker = L.marker([userLatitude, userLongitude], { icon: redIcon })
+                                .addTo(map)
+                                .bindPopup("<b>Vous êtes ici</b>")
+                                .openPopup();
+                            
                             const radiusMeters = rayon * 1000; // Convert km to meters
                             const distanceClause = `distance(equip_coordonnees, geom'POINT(${userLongitude} ${userLatitude})', ${radiusMeters}m)`;
                             
@@ -531,10 +569,16 @@ function applyFilters() {
                             
                             console.log('Applying filters with where clause:', whereClause);
                             loadmap(map, whereClause);
+                            loadDatabaseInfrastructures();
                         },
                         (error) => {
                             console.error('Geolocation error:', error);
                             alert('Impossible de récupérer votre position. Assurez-vous que la géolocalisation est activée dans votre navigateur.');
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 0
                         }
                     );
                 } else {
